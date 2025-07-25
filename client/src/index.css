@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('/fonts/RobotoCondensed-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto-SemiBold';
+    src: url('/fonts/RobotoCondensed-SemiBold.ttf') format('truetype');
+}
+
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fonts/Poppins-Regular.ttf') format('truetype');
+}

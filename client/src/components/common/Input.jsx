@@ -7,14 +7,14 @@ const Input = forwardRef(
     const isPassword = type === "password";
 
     return (
-      <div className="w-full">
+      <div className="">
         {label && (
           <label className="block text-sm font-medium text-gray-800 mb-1 ml-1">
             {label}
           </label>
         )}
 
-        <div className="mt-1 relative  flex items-center border border-gray-300 rounded-md ">
+        <div className=" relative  flex items-center border border-gray-300 rounded-md ">
           {Icon && (
             <div className="px-2.5 flex items-center pointer-events-none border-r  border-gray-300">
               <Icon className="h-5 w-5 text-gray-400" />
@@ -26,7 +26,7 @@ const Input = forwardRef(
               isPassword && !showPassword
                 ? "password"
                 : type !== "text"
-                ? "email"
+                ? type
                 : "text"
             }
             className={`py-2.5 pl-2 pr-10 grow outline-none ${className}`}

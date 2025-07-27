@@ -6,17 +6,18 @@ const Button = ({
   icon: Icon,
   className,
   children,
+  loading,
   ...props
 }) => {
   return (
     <button
       type={type}
-      className={`w-full flex justify-center py-2 px-4  rounded-md  font-medium   ${className}`}
+      className={`w-full flex justify-center  rounded-md  font-medium   ${className}`}
       {...props}
     >
       <span className="flex gap-1.5 items-center">
         {Icon && <Icon size={20} />}
-        {btnName || children}
+        {loading ? (btnName || children) + "..." : btnName || children}
       </span>
     </button>
   );

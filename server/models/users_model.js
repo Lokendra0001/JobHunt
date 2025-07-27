@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, default: mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
@@ -9,15 +9,18 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true
-    },
+        unique: true,
+        index: true // Makes login faster
+    }
+    ,
     password: {
         type: String,
-        required: true
+        required: true,
+        select: false
     },
     role: {
         type: String,
-        enum: ["seeker", "recruiter"],
+        enum: ["Seeker", "Recruiter", "CompanyOwner"],
         required: true
     },
 
@@ -26,24 +29,24 @@ const userSchema = new Schema({
     location: String,
 
     resume: String,
-    skills: [String],
+    skills: [String], //optional
     portfolioLink: String,
     experience: String,
 
-    companyName: String,
-    companyLogo: String,
-    companyDescription: String,
-    companyWebsiteUrl: String
+    company_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "companies"
+    }
 
 }, { timestamps: true });
 
 // Convert the userPwd into Hashed Pwd
 userSchema.pre('save', async function (next) {
-    const userPwd = this.password;
-    const hashedPwd = await bcrypt.hash(userPwd, 10);
-    this.password = hashedPwd;
+    if (!this.isModified('password')) return next();
+    this.password = await bcrypt.hash(this.password, 10);
     next();
 });
+
 
 // Compare the enteredPwd with Hashed Pwd
 userSchema.methods.comparePwd = async function (enteredPwd) {

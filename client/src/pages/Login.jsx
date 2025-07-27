@@ -11,7 +11,7 @@ import axios from "axios";
 import { serverObj } from "../config/serverConfig";
 import { handleErrorMsg, handleSuccessMsg } from "../config/toast";
 
-const Signup = () => {
+const Login = () => {
   const serverAPI = serverObj.serverAPI;
   const [loading, setLoading] = useState(false);
   const {
@@ -20,19 +20,19 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const handleSignup = (data) => {
+  const handleLogin = (data) => {
     setLoading(true);
     axios
-      .post(`${serverAPI}/user/signUp`, data, { withCredentials: true })
+      .post(`${serverAPI}/user/normalLogin`, data, { withCredentials: true })
       .then((res) => handleSuccessMsg(res.data.message))
       .catch((err) => handleErrorMsg(err.response.data.message))
       .finally(() => setLoading(false));
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center py-5 w-full select-none">
-      <div className="sm:mx-auto sm:w-full sm:max-w-[1000px] relative shadow-xs ">
-        <div className="absolute hidden sm:top-3 left-3 sm:left-5 sm:flex gap-1">
+    <div className="min-h-screen  flex flex-col items-center justify-center    w-full select-none">
+      <div className="sm:mx-auto sm:w-full sm:max-w-[1000px]  relative p-5  rounded-2xl ">
+        <div className="absolute hidden top-7 left-7 sm:flex gap-1">
           <div className="w-6 h-6 rounded-full overflow-hidden">
             <img src={logo} alt="J" className="h-full w-full" />
           </div>
@@ -41,44 +41,38 @@ const Signup = () => {
           </h2>
         </div>
 
-        <div className="w-full flex flex-col md:flex-row gap-10">
+        <div className="min-h-[90dvh] h-full w-full flex flex-col  justify-center md:flex-row gap-10">
           {/* Image Section */}
           <div className="w-full md:w-2/3 hidden sm:block aspect-[4/3] rounded-lg overflow-hidden pointer-events-none">
             <img
               src={loginSideImage}
               alt="Signup illustration"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover "
             />
           </div>
 
           {/* Form Section */}
-          <div className="md:w-1/2 pt-7 flex flex-col items-center gap-6">
-            <h2 className="text-center text-2xl font-[Roboto-SemiBold] text-gray-900 flex gap-1 items-center">
-              <img src={logo} alt="J" className="h-7 w-7" /> Create your account
+          <div className="md:w-1/2 sm:pt-10 flex flex-col items-center gap-6">
+            <h2 className="text-center text-2xl font-bold text-gray-900 flex gap-1 items-center">
+              <img src={logo} alt="J" className="h-7 w-7" /> Welcome Back to
+              JobHunt
             </h2>
 
-            <p className="text-gray-500 leading-0">
-              Enter your credentials to access your account
-            </p>
+            <div className="space-y-6 self-start">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-800 mb-1">
+                  Sign in to your account
+                </h2>
+                <p className="text-gray-500 text-sm">
+                  Enter your credentials to access your account
+                </p>
+              </div>
+            </div>
+
             <form
               className="space-y-6 w-full"
-              onSubmit={handleSubmit(handleSignup)}
+              onSubmit={handleSubmit(handleLogin)}
             >
-              <Input
-                type="text"
-                label="Full Name"
-                icon={User2Icon}
-                placeholder="Enter Full Name"
-                {...register("fullName", {
-                  required: "Full name required!",
-                  minLength: {
-                    value: 5,
-                    message: "Full name must be more than 5 characters!",
-                  },
-                })}
-                error={errors.fullName?.message}
-              />
-
               <Input
                 type="email"
                 label="Email Address"
@@ -101,34 +95,41 @@ const Signup = () => {
                 placeholder="•••••••••••"
                 {...register("password", {
                   required: "Password is required!",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters!",
-                  },
-                  pattern: {
-                    value: /^(?=.*[0-9])(?=.*[!@#$%^&*])/,
-                    message:
-                      "Must include at least one number and special character!",
-                  },
                 })}
                 error={errors.password?.message}
               />
 
-              <Select
-                options={["Seeker", "Recruiter", "CompanyOwner"]}
-                label="I want to be"
-                defaultValue="Select Role"
-                {...register("role", {
-                  required: "Please select a role!",
-                })}
-                error={errors.role?.message}
-              />
+              <div className="flex items-center justify-between ">
+                <div className="flex items-center">
+                  <input
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                    className="h-4 w-4"
+                  />
+                  <label
+                    htmlFor="remember-me"
+                    className="ml-2 block text-sm text-gray-700"
+                  >
+                    Remember me
+                  </label>
+                </div>
+
+                <div className="text-sm">
+                  <Link
+                    to="/forgot-password"
+                    className="font-medium text-primary hover:text-indigo-500"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
+              </div>
 
               <Button
                 type="submit"
-                btnName="Signup"
+                btnName="SignIn"
                 icon={LogIn}
-                className={`text-white  px-4 py-2  ${
+                className={`text-white px-4 py-2 ${
                   loading
                     ? "bg-indigo-500 cursor-not-allowed"
                     : "bg-primary hover:bg-primary-hover cursor-pointer"
@@ -139,21 +140,26 @@ const Signup = () => {
             </form>
 
             <p className="w-full text-start leading-0">
-              Already have an account?{" "}
+              Don't have an account?{" "}
               <Link
-                to="/login"
+                to="/"
                 className="text-primary hover:text-indigo-800 underline"
               >
-                Login
+                SignUp
               </Link>
             </p>
 
-            <div className="text-center text-xs text-gray-500">
+            <div className="text-center text-xs text-gray-500 mt-3">
               <p>
-                By signing up, you agree to our{" "}
-                <span className="underline text-primary">Terms of Service</span>{" "}
+                By login, you agree to our{" "}
+                <span className="underline text-primary">
+                  Terms of Service
+                </span>{" "}
                 and{" "}
-                <span className="underline text-primary">Privacy Policy</span>.
+                <span className="underline text-primary">
+                  Privacy Policy
+                </span>
+                .
               </p>
             </div>
           </div>
@@ -163,4 +169,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;

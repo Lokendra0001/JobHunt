@@ -4,7 +4,7 @@ import { Eye, EyeClosed } from "lucide-react"; // You can use any icon lib you p
 const Input = forwardRef(
   ({ label, className, icon: Icon, type = "text", error, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
-    const isPassword = type === "password";
+    const isPassword = type == "password";
 
     return (
       <div className="">
@@ -22,13 +22,7 @@ const Input = forwardRef(
           )}
 
           <input
-            type={
-              isPassword && !showPassword
-                ? "password"
-                : type !== "text"
-                ? type
-                : "text"
-            }
+            type={isPassword ? (!showPassword ? "password" : "text") : type}
             className={`py-2.5 pl-2 pr-10 grow outline-none ${className}`}
             {...props}
             autoComplete="off"

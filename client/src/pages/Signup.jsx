@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Mail, User2Icon, LockKeyhole, LogIn, AtSignIcon } from "lucide-react";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/Logo.png";
 import loginSideImage from "../assets/images/loginSide.png";
 import Select from "../components/common/Select";
@@ -10,22 +10,41 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { serverObj } from "../config/serverConfig";
 import { handleErrorMsg, handleSuccessMsg } from "../config/toast";
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/slices/authSlice";
 
 const Signup = () => {
   const serverAPI = serverObj.serverAPI;
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const dispatch = useDispatch();
 
+  const getNavigation = (role) => {
+    if (role == "Seeker") return "/seeker";
+    if (role == "Client") return "/client";
+    return "";
+  };
   const handleSignup = (data) => {
     setLoading(true);
     axios
       .post(`${serverAPI}/user/signUp`, data, { withCredentials: true })
-      .then((res) => handleSuccessMsg(res.data.message))
-      .catch((err) => handleErrorMsg(err.response.data.message))
+      .then((res) => {
+        handleSuccessMsg(res.data.message);
+        dispatch(addUser({ user: res.data.user, role: res.data.user.role }));
+        navigate(getNavigation(res.data.user.role));
+      })
+      .catch((err) =>
+        handleErrorMsg(
+          err?.response?.data?.message ||
+            err?.message ||
+            "Something Went Wrong!"
+        )
+      )
       .finally(() => setLoading(false));
   };
 
@@ -115,7 +134,7 @@ const Signup = () => {
               />
 
               <Select
-                options={["Seeker", "Recruiter", "CompanyOwner"]}
+                options={["Seeker", "Client"]}
                 label="I want to be"
                 defaultValue="Select Role"
                 {...register("role", {
@@ -128,7 +147,7 @@ const Signup = () => {
                 type="submit"
                 btnName="Signup"
                 icon={LogIn}
-                className={`text-white  px-4 py-2  ${
+                className={`text-white w-full   px-4 py-2  ${
                   loading
                     ? "bg-indigo-500 cursor-not-allowed"
                     : "bg-primary hover:bg-primary-hover cursor-pointer"

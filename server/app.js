@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require("cors")
 const connectMongoDB = require('./config/mongooseConnection');
 const userRouter = require('./routes/user');
+const freelancerProjectRouter = require('./routes/freelancerProject');
 
 const app = express();
 const PORT = 3000;
@@ -26,5 +27,7 @@ app.get("/", (req, res) => {
 })
 
 app.use('/user', userRouter)
+app.use('/freelancerProject', freelancerProjectRouter)
+
 
 app.listen(PORT, () => console.log(`Server Started At ${PORT} `))

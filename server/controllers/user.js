@@ -9,7 +9,7 @@ const handleUserSignup = async (req, res) => {
 
         const user = await User.create({ fullName, email, password, role });
         generateTokenAndSendCookie(user, res);
-        res.status(201).json({ message: "User Signup Successfully" });
+        res.status(201).json({ message: "User Signup Successfully", user });
     } catch (err) {
         res.status(500).json({ message: `Internal Server Error : ${err} ` })
     }
@@ -24,9 +24,12 @@ const handleUserNormalLogin = async (req, res) => {
         const isPwdCorrect = await user.comparePwd(password);
         if (!isPwdCorrect) return res.status(401).json({ message: "Password is Invalid!" });
 
+        const { password: _, ...userWithoutPassword } = user.toObject();
+
         generateTokenAndSendCookie(user, res);
-        res.status(200).json({ message: "User Login Successfully", user });
+        res.status(200).json({ message: "User Login Successfully", user: userWithoutPassword });
     } catch (err) {
+        console.log(err)
         res.status(500).json({ message: `Internal Server Error : ${err.message} ` })
     }
 };
@@ -34,15 +37,32 @@ const handleUserNormalLogin = async (req, res) => {
 const handleGetCurrentUser = async (req, res) => {
     try {
         const user_id = req.user._id;
-        const user = await User.findById({ _id: user_id }).select('-password');
+        const user = await User.findById({ _id: user_id }).select('-password')
         res.status(200).json({ message: "User is Authenticated", user });
     } catch (err) {
         res.status(500).json({ message: `Internal Server Error : ${err.message} ` })
     }
 };
 
+const handleLogoutUser = async (req, res) => {
+    try {
+        res.clearCookie('plrC__r92qv98', {
+            httpOnly: true,
+            secure: true,
+            sameSite: "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        })
+        res.status(200).json({ message: "Logout Successfully!" });
+    } catch (err) {
+        res.status(500).json({ message: `Internal Server Error : ${err} ` })
+    }
+}
+
+
 module.exports = {
     handleUserSignup,
     handleUserNormalLogin,
-    handleGetCurrentUser
+    handleGetCurrentUser,
+    handleLogoutUser,
+
 }

@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Mail, User2Icon, LockKeyhole, LogIn, AtSignIcon } from "lucide-react";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/Logo.png";
 import loginSideImage from "../assets/images/loginSide.png";
-import Select from "../components/common/Select";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { serverObj } from "../config/serverConfig";
 import { handleErrorMsg, handleSuccessMsg } from "../config/toast";
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/slices/authSlice";
 
 const Login = () => {
   const serverAPI = serverObj.serverAPI;
@@ -19,12 +20,25 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const getNavigation = (role) => {
+    if (role == "Seeker") return "/seeker";
+    if (role == "Client") return "/client";
+    return "/seeker";
+  };
 
   const handleLogin = (data) => {
     setLoading(true);
     axios
       .post(`${serverAPI}/user/normalLogin`, data, { withCredentials: true })
-      .then((res) => handleSuccessMsg(res.data.message))
+      .then((res) => {
+        handleSuccessMsg(res.data.message);
+        dispatch(addUser({ user: res.data.user, role: res.data.user.role }));
+        const role = res.data.user.role;
+        navigate(getNavigation(role));
+      })
       .catch((err) => handleErrorMsg(err.response.data.message))
       .finally(() => setLoading(false));
   };
@@ -129,7 +143,7 @@ const Login = () => {
                 type="submit"
                 btnName="SignIn"
                 icon={LogIn}
-                className={`text-white px-4 py-2 ${
+                className={`w-full mt-10 text-white px-4 py-2 ${
                   loading
                     ? "bg-indigo-500 cursor-not-allowed"
                     : "bg-primary hover:bg-primary-hover cursor-pointer"
@@ -142,7 +156,7 @@ const Login = () => {
             <p className="w-full text-start leading-0">
               Don't have an account?{" "}
               <Link
-                to="/"
+                to="/signup"
                 className="text-primary hover:text-indigo-800 underline"
               >
                 SignUp
@@ -152,14 +166,9 @@ const Login = () => {
             <div className="text-center text-xs text-gray-500 mt-3">
               <p>
                 By login, you agree to our{" "}
-                <span className="underline text-primary">
-                  Terms of Service
-                </span>{" "}
+                <span className="underline text-primary">Terms of Service</span>{" "}
                 and{" "}
-                <span className="underline text-primary">
-                  Privacy Policy
-                </span>
-                .
+                <span className="underline text-primary">Privacy Policy</span>.
               </p>
             </div>
           </div>

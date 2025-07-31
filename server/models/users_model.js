@@ -9,34 +9,31 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
-        index: true // Makes login faster
+        index: true
     }
     ,
     password: {
         type: String,
         required: true,
-        select: false
     },
     role: {
         type: String,
-        enum: ["Seeker", "Recruiter", "CompanyOwner"],
+        enum: ["Seeker", "Client"],
         required: true
     },
 
-    profilePic: String,
+    profilePic: {
+        type: String,
+        default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjNUOgjEhHpfUqnVk-Tp2uN1AhrrzXhwdX9A&s"
+    },
     phoneNo: String,
     location: String,
 
+    //Seeker Fields
     resume: String,
     skills: [String], //optional
     portfolioLink: String,
     experience: String,
-
-    company_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "companies"
-    }
 
 }, { timestamps: true });
 

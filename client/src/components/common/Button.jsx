@@ -12,7 +12,8 @@ const Button = ({
   return (
     <button
       type={type}
-      className={`w-full flex justify-center  rounded-md  font-medium   ${className}`}
+      //w-full removed
+      className={`flex justify-center  rounded-md  font-medium   ${className}`}
       {...props}
     >
       <span className="flex gap-1.5 items-center">

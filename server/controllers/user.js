@@ -58,11 +58,50 @@ const handleLogoutUser = async (req, res) => {
     }
 }
 
+const handleAddProjectId = async (req, res) => {
+    try {
+        console.log(req.body)
+        const { projectId } = req.body;
+        const user_id = req.user._id;
+        const user = await User.findById(user_id);
+        console.log(user)
+        user.appliedForm.push(projectId);
+        await user.save()
+        res.status(200).json({ message: "ProjectId Stored Successfully!", user });
+    } catch (err) {
+        res.status(500).json({ message: `Internal Server Error : ${err.message} ` })
+    }
+};
+
+const handlGetAllAppliedForm = async (req, res) => {
+    try {
+        const user_id = req.user._id;
+
+        const appliedForm = await User.findById(user_id)
+            .populate({
+                path: "appliedForm",             // Populate the project
+                populate: {
+                    path: "client_id",             // Nested populate client from project
+                    select: "fullName email role"  // Optional: choose fields to return
+                }
+            })
+            .select("appliedForm -_id");        // Only return appliedForm
+
+        res.status(200).json(appliedForm);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: `Internal Server Error : ${err.message}` });
+    }
+};
+
+
+
 
 module.exports = {
     handleUserSignup,
     handleUserNormalLogin,
     handleGetCurrentUser,
     handleLogoutUser,
-
+    handleAddProjectId,
+    handlGetAllAppliedForm
 }

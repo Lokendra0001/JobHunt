@@ -43,6 +43,14 @@ const freelanceProjectSchema = new Schema({
                 ref: "users",
                 required: true
             },
+            seeker_phoneno: {
+                type: Number,
+                required: true
+            },
+            seeker_currentStatus: {
+                type: String,
+                required: true
+            },
             coverLetter: {
                 type: String,
                 maxlength: 2000
@@ -67,7 +75,7 @@ const freelanceProjectSchema = new Schema({
         default: null
     },
 
-    status: { type: String, enum: ["Open", "In Progress", "Completed", "Closed"], default: "Open" },
+    status: { type: String, enum: ["Open", "Assigned", "Completed", "Closed"], default: "Open" },
 
 
 

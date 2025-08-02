@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Loader } from "../../components/common/Index";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { serverObj } from "../../config/serverConfig";
 import useAuth from "../../customHooks/useAuth";
@@ -56,7 +56,7 @@ const ProjectDetail = () => {
     <div className="max-w-5xl mx-auto p-3 sm:p-6 select-none relative ">
       {/* Back Button */}
       <button
-        className="flex relative  mb-4 z-50 xl:absolute xl:top-3 xl:-left-30"
+        className="flex relative  mb-4 z-30 xl:absolute xl:top-3 xl:-left-30"
         onClick={() => navigate(-1)}
       >
         <ChevronLeft />
@@ -88,7 +88,7 @@ const ProjectDetail = () => {
                   ${
                     project.status === "Open"
                       ? "bg-green-100 text-green-800"
-                      : project.status === "In Progress"
+                      : project.status === "Assigned"
                       ? "bg-yellow-100 text-yellow-800"
                       : project.status === "Completed"
                       ? "bg-purple-100 text-purple-800"
@@ -100,19 +100,17 @@ const ProjectDetail = () => {
               </div>
             </div>
 
-            {role == "Seeker" && (
-              <div className="flex gap-3">
-                <Button className="bg-primary hover:bg-primary-hover px-4 py-2 text-primary-text">
-                  Apply Now
-                </Button>
-                <Button
-                  variant="outline"
-                  className="border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2"
+            {role == "Seeker" &&
+              project.status !== ("Assigned" || "Completed") && (
+                <Link
+                  to={`/seeker/project/${id}/apply-form`}
+                  className="flex gap-3"
                 >
-                  Save Project
-                </Button>
-              </div>
-            )}
+                  <Button className="bg-primary hover:bg-primary-hover px-4 py-2 text-primary-text">
+                    Apply Now
+                  </Button>
+                </Link>
+              )}
           </div>
 
           <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-700">
@@ -205,7 +203,8 @@ const ProjectDetail = () => {
                   Proposals
                 </h4>
                 <p className="text-gray-900">
-                  {project.proposals?.length || 0} received
+                  {project.proposals?.length || 0}{" "}
+                  {role == "Seeker" ? "Applied" : "Received"}
                 </p>
               </div>
 
@@ -228,11 +227,14 @@ const ProjectDetail = () => {
               </div>
             </div>
 
-            {role == "Seeker" && (
-              <Button className="w-full mt-6 bg-primary hover:bg-primary-hover text-primary-text">
-                Apply Now
-              </Button>
-            )}
+            {role == "Seeker" &&
+              project.status !== ("Assigned" || "Completed") && (
+                <Link to={`/seeker/project/${id}/apply-form`}>
+                  <Button className="w-full mt-6 py-2 bg-primary hover:bg-primary-hover text-primary-text">
+                    Apply Now
+                  </Button>
+                </Link>
+              )}
           </div>
         </div>
       </div>

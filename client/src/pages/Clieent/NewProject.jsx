@@ -47,9 +47,10 @@ const NewProject = () => {
     "UI/UX Design",
     "Content Writing",
     "Digital Marketing",
-    "Video Editing",
-    "Accounting & Finance",
-    "Translation",
+    "Virtual Assistant",
+    "Data Analytics",
+    "Customer Support",
+    "Sales",
     "Other",
   ];
 

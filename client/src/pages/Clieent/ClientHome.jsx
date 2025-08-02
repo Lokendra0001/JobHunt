@@ -83,7 +83,7 @@ const ClientHome = () => {
   }
 
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8">
+    <div className="py-8 min-h-[90dvh]">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Your Projects</h1>
         <p className="text-gray-600 mt-2">
@@ -92,7 +92,7 @@ const ClientHome = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((project) => (
+        {projects.slice(0, 6).map((project) => (
           <ClientProjectCard
             project={project}
             key={project._id}

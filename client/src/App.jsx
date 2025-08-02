@@ -12,7 +12,7 @@ import { serverObj } from "./config/serverConfig";
 import MainLayout from "./layouts/MainLayout";
 import SeekerLayout from "./layouts/SeekerLayout";
 import ClientLayout from "./layouts/ClientLayout";
-import { FindJob, SeekerHome } from "./pages/Seeker/Index";
+import { FindProjects, SeekerHome } from "./pages/Seeker/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
@@ -24,6 +24,11 @@ import NewProject from "./pages/Clieent/NewProject";
 import ClientHome from "./pages/Clieent/ClientHome";
 import ProjectDetail from "./pages/Clieent/ProjectDetail";
 import Loader from "./components/common/Loader";
+import ApplyForm from "./pages/Seeker/ApplyForm";
+import AppliedForm from "./pages/Seeker/AppliedForm";
+import SeekerProfile from "./pages/Seeker/SeekerProfile";
+import AllProposals from "./pages/Clieent/AllProposals";
+import ProposalsDetail from "./pages/Clieent/ProposalsDetail";
 
 const App = () => {
   const serverAPI = serverObj.serverAPI;
@@ -66,7 +71,14 @@ const App = () => {
               <SeekerLayout />
             </ProtectedRoute>
           ),
-          children: [{ path: "/seeker", element: <SeekerHome /> }],
+          children: [
+            { path: "/seeker", element: <SeekerHome /> },
+            { path: "findProjects", element: <FindProjects /> },
+            { path: "applied-projects", element: <AppliedForm /> },
+            { path: "profile", element: <SeekerProfile /> },
+            { path: `project/:id/apply-form`, element: <ApplyForm /> },
+            { path: `project/:id`, element: <ProjectDetail /> },
+          ],
         },
         {
           path: "/client",
@@ -79,7 +91,9 @@ const App = () => {
             { path: "/client", element: <ClientHome /> },
             { path: "profile", element: <ClientDashboard /> },
             { path: "create-newProject", element: <NewProject /> },
-            { path: `/client/project/:id`, element: <ProjectDetail /> },
+            { path: "allProposals", element: <AllProposals /> },
+            { path: `allProposals/:id`, element: <ProposalsDetail /> },
+            { path: `project/:id`, element: <ProjectDetail /> },
           ],
         },
 

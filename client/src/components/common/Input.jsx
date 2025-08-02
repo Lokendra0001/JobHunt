@@ -7,7 +7,7 @@ const Input = forwardRef(
     const isPassword = type == "password";
 
     return (
-      <div className="">
+      <div>
         {label && (
           <label className="block text-sm font-medium text-gray-800 mb-1 ml-1">
             {label}

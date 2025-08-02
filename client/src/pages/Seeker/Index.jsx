@@ -1,5 +1,5 @@
 import SeekerHome from "./SeekerHome";
 
-import FindJob from "./FindJob";
+import FindProjects from "./FindProjects";
 
-export { SeekerHome, FindJob };
+export { SeekerHome, FindProjects };

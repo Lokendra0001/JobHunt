@@ -34,6 +34,12 @@ const userSchema = new Schema({
     skills: [String], //optional
     portfolioLink: String,
     experience: String,
+    appliedForm: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "freelancerProject"
+        }
+    ]
 
 }, { timestamps: true });
 

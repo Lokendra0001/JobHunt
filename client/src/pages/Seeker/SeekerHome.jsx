@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Search,
   Briefcase,
@@ -20,19 +20,33 @@ import {
   BarChart2Icon,
   PieChart,
 } from "lucide-react";
-import Select from "../../components/common/Select";
-import cities from "indian-cities-json";
-import Input from "../../components/common/Input";
 import { NavLink } from "react-router-dom";
+import ProjectCard from "../../components/seeker/ProjectCard";
+import axios from "axios";
+import { serverObj } from "../../config/serverConfig";
 
 const Home = () => {
-  const popularJobs = [
-    "Frontend Developer",
-    "UX Designer",
-    "Data Scientist",
-    "Product Manager",
-    "DevOps Engineer",
-  ];
+  const [projects, setProjects] = useState([]);
+  const serverAPI = serverObj.serverAPI;
+
+  const fetchAllProjects = async () => {
+    try {
+      const res = await axios.get(
+        `${serverAPI}/freelancerProject/get-allProjects`,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(res.data);
+      setProjects(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllProjects();
+  }, []);
 
   const allCategory = [
     {
@@ -40,7 +54,7 @@ const Home = () => {
       name: "Design",
       availableJob: (
         <>
-          235 jobs available{" "}
+          235 Project available{" "}
           <ChevronRight
             className="text-gray-400 group-hover:text-gray-300"
             size={20}
@@ -53,7 +67,7 @@ const Home = () => {
       name: "Development",
       availableJob: (
         <>
-          421 jobs available{" "}
+          421 projects available{" "}
           <ChevronRight
             className="text-gray-400 group-hover:text-gray-300"
             size={20}
@@ -66,7 +80,7 @@ const Home = () => {
       name: "Content Writing",
       availableJob: (
         <>
-          178 jobs available{" "}
+          178 projects available{" "}
           <ChevronRight
             className="text-gray-400 group-hover:text-gray-300"
             size={20}
@@ -79,7 +93,7 @@ const Home = () => {
       name: "Marketing",
       availableJob: (
         <>
-          310 jobs available{" "}
+          310 projects available{" "}
           <ChevronRight
             className="text-gray-400 group-hover:text-gray-300"
             size={20}
@@ -92,7 +106,7 @@ const Home = () => {
       name: "Virtual Assistant",
       availableJob: (
         <>
-          129 jobs available{" "}
+          129 projects available{" "}
           <ChevronRight
             className="text-gray-400 group-hover:text-gray-300"
             size={20}
@@ -105,7 +119,7 @@ const Home = () => {
       name: "Data Analytics",
       availableJob: (
         <>
-          295 jobs available{" "}
+          295 projects available{" "}
           <ChevronRight
             className="text-gray-400 group-hover:text-gray-300"
             size={20}
@@ -118,7 +132,7 @@ const Home = () => {
       name: "Customer Support",
       availableJob: (
         <>
-          198 jobs available{" "}
+          198 projects available{" "}
           <ChevronRight className="text-gray-400" size={20} />
         </>
       ),
@@ -128,23 +142,19 @@ const Home = () => {
       name: "Sales",
       availableJob: (
         <>
-          156 jobs available{" "}
+          156 projects available{" "}
           <ChevronRight className="text-gray-400" size={20} />
         </>
       ),
     },
   ];
 
-  const options = cities.cities.slice(0, 100).map((city, i) => {
-    return `${city.name}, ${city.state}`;
-  });
-
   return (
     <div className="min-h-screen  py-12 select-none w-full overflow-hidden">
       {/* Hero Section */}
       <div>
         {/* Hero Text Section */}
-        <div className="text-center mb-16">
+        <div className="text-center sm:mb-16">
           <div className="inline-flex items-center px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-6 shadow-sm animate-pulse">
             <Rocket className="h-4 w-4 mr-2" />
             Find your dream job today
@@ -183,60 +193,9 @@ const Home = () => {
           </p>
         </div>
 
-        {/* Search Section */}
-        <div className="bg-white rounded-xl shadow-sm p-6 max-w-4xl mx-auto mb-16">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="relative flex-1">
-              <div className="absolute inset-y-0 -top-2 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-gray-400" />
-              </div>
-              <Input
-                type="text"
-                className="block w-full  pl-10  overflow-hidden rounded-lg  
-                 focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Job title, keywords, or company"
-              />
-            </div>
-
-            <div className="relative flex-1 ">
-              <div className="absolute inset-y-0 -top-2 left-0 pl-3 flex items-center pointer-events-none">
-                <MapPin className="h-5 w-5 text-gray-400" />
-              </div>
-              <Select
-                defaultValue="Select location"
-                className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg bg-gray-50  appearance-none mt-0"
-                options={options}
-              />
-
-              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <ChevronDown className="h-5 w-5 text-gray-400" />
-              </div>
-            </div>
-
-            <button className="h-fit bg-indigo-600  hover:bg-indigo-700 text-white px-5 py-2.5   rounded-md font-medium flex items-center justify-center transition-colors duration-200 shadow-sm">
-              {/* <Search className="h-5 w-5 mr-2" /> */}
-              Find Jobs
-            </button>
-          </div>
-
-          <p className="text-sm text-gray-500 mt-4 flex items-center flex-wrap">
-            <span className="mr-2">Popular jobs:</span>
-            {popularJobs.map((job, index) => (
-              <React.Fragment key={job}>
-                <span className="text-indigo-600 hover:text-indigo-800">
-                  {job}
-                </span>
-                {index < popularJobs.length - 1 && (
-                  <span className="mx-1">•</span>
-                )}
-              </React.Fragment>
-            ))}
-          </p>
-        </div>
-
         {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex items-center mb-4">
               <div className="p-3 rounded-full bg-indigo-100 mr-4">
                 <Rocket className="h-6 w-6 text-indigo-600" />
@@ -248,7 +207,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex items-center mb-4">
               <div className="p-3 rounded-full bg-green-100 mr-4">
                 <Briefcase className="h-6 w-6 text-green-600" />
@@ -260,7 +219,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex items-center mb-4">
               <div className="p-3 rounded-full bg-purple-100 mr-4">
                 <Star className="h-6 w-6 text-purple-600" />
@@ -277,12 +236,12 @@ const Home = () => {
       {/* Category Section */}
       <div className="bg-white">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-          <h1 className="text-3xl font-bold  text-gray-900">
-            Explore by <span className="text-primary">Category</span>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center sm:mb-8 gap-4">
+          <h1 className="text-2xl sm:text-3xl font-bold  text-gray-900">
+            Explore By <span className="text-primary">Category</span>
           </h1>
-          <NavLink className="flex items-center mt-7 gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
-            Show all jobs <MoveRight className="w-5 h-5" />
+          <NavLink className=" flex items-center sm:mt-7  gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+            Show all Projects <MoveRight className="w-5 h-5" />
           </NavLink>
         </div>
 
@@ -290,7 +249,7 @@ const Home = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
           {allCategory.map((category, i) => (
             <NavLink
-              to={`/findjob?category=${category.name}`}
+              to={`/seeker/findProjects?category=${category.name}`}
               key={i}
               className="bg-white hover:bg-primary hover:text-primary-text p-6 rounded-xl  border border-primary-border transition-all  hover:-translate-y-1 group cursor-default"
             >
@@ -306,6 +265,29 @@ const Home = () => {
                 </div>
               </div>
             </NavLink>
+          ))}
+        </div>
+      </div>
+
+      {/* Featured Freelance Projects */}
+
+      <div className="mt-10">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center sm:mb-8 gap-4">
+          <h1 className="text-2xl sm:text-3xl font-bold  text-gray-900">
+            Featured Freelance <span className="text-primary">Projects</span>
+          </h1>
+          <NavLink className=" flex items-center sm:mt-7  gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+            Show all Projects <MoveRight className="w-5 h-5" />
+          </NavLink>
+        </div>
+        <div className="grid  place-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
+          {projects.slice(0, 6).map((project) => (
+            <ProjectCard
+              project={project}
+              key={project._id}
+              className="transition-transform hover:scale-[1.02] duration-300"
+            />
           ))}
         </div>
       </div>

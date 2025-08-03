@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const allowedOrigin = ["http://localhost:5173"];
+const allowedOrigin = ["http://localhost:5173", "https://jobhunt-pi-nine.vercel.app"];
 app.use(cors({
     origin: allowedOrigin,
     credentials: true

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { Button } from "../common/Index";
 import useAuth from "../../customHooks/useAuth";
 import {
   FiMenu,

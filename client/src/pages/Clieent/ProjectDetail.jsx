@@ -65,20 +65,21 @@ const ProjectDetail = () => {
 
       {/* Header Section */}
       <div className="flex flex-col md:flex-row gap-6 mb-8">
-        <div className="flex-shrink-0">
-          <div
-            className={`w-16 h-16 ${randomColor} rounded-full flex items-center justify-center text-white text-2xl font-bold`}
-          >
-            {project.title?.charAt(0) || "P"}
-          </div>
-        </div>
-
         <div className="flex-1">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                {project.title}
-              </h1>
+              <div className="flex flex-col h-full sm:flex-row   sm:items-center  gap-1 sm:gap-3 mb-3 sm:mb-0">
+                <div
+                  className={`w-10 h-10 sm:w-13 sm:h-13 ${randomColor} rounded-full 
+                flex items-center justify-center text-white text-2xl font-bold leading-none`}
+                >
+                  {project.title?.charAt(0) || "P"}
+                </div>
+                <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+                  {project.title}
+                </h1>
+              </div>
+
               <div className="flex items-center gap-2 mt-2">
                 <span className="inline-block px-3 py-1 text-sm font-medium bg-blue-100 text-blue-800 rounded-full">
                   {project.category}

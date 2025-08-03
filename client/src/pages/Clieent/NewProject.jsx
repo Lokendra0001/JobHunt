@@ -19,6 +19,7 @@ import {
   Book,
   Globe,
   IndianRupee,
+  Send,
 } from "lucide-react";
 import { Input, Select, Button } from "../../components/common/Index";
 import axios from "axios";
@@ -86,18 +87,18 @@ const NewProject = () => {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto p-6 md:p-8 bg-white rounded-2xl shadow-xl border border-gray-200">
+    <div className="w-full max-w-5xl mx-auto py-4 md:p-8 bg-white rounded-2xl shadow-xl border border-gray-200">
       {/* Header with Gradient Background */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-6 mb-8 text-white">
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl px-2 py-4 md:p-6 mb-8 text-white">
         <div className="flex items-center gap-4">
           <div className="p-3 bg-white/20 rounded-full">
-            <Briefcase size={28} className="text-white" />
+            <Briefcase size={23} className="text-white" />
           </div>
           <div>
             <h1 className="text-2xl md:text-3xl font-bold">
               Post a New Project
             </h1>
-            <p className="text-indigo-100">
+            <p className="text-indigo-100 text-sm">
               Find the perfect freelancer for your job
             </p>
           </div>
@@ -106,7 +107,7 @@ const NewProject = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         {/* Project Title */}
-        <div className="bg-gray-50 p-5 rounded-xl border border-gray-200">
+        <div className="bg-gray-50 p-2 md:p-5 rounded-xl border border-gray-200">
           <Input
             label="Project Title *"
             icon={FileText}
@@ -117,7 +118,7 @@ const NewProject = () => {
         </div>
 
         {/* Project Description */}
-        <div className="bg-gray-50 p-5 rounded-xl border border-gray-200">
+        <div className="bg-gray-50 p-2 md:p-5 rounded-xl border border-gray-200">
           <label className=" text-sm font-medium text-gray-700 mb-3 flex items-center gap-2">
             <FileText size={18} className="text-indigo-600" />
             Project Description *
@@ -144,7 +145,7 @@ const NewProject = () => {
         {/* Budget Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Budget Type */}
-          <div className="bg-gray-50 p-5 rounded-xl border border-gray-200">
+          <div className="bg-gray-50 p-2 md:p-5 rounded-xl border border-gray-200">
             <Select
               label="Budget Type *"
               options={budgetTypeOptions}
@@ -155,7 +156,7 @@ const NewProject = () => {
           </div>
 
           {/* Budget Range */}
-          <div className="bg-gray-50 p-5  py-3 rounded-xl border border-gray-200">
+          <div className="bg-gray-50 p-2 md:p-5  py-3 rounded-xl border border-gray-200">
             <label className="text-sm  font-semibold text-zinc-700 ">
               {budgetType === "Fixed" ? "Project Budget *" : "Hourly Rate *"}
             </label>
@@ -233,7 +234,7 @@ const NewProject = () => {
         {/* Category & Skills Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Category */}
-          <div className="bg-gray-50 p-5 rounded-xl border border-gray-200">
+          <div className="bg-gray-50 p-2 md:p-5 rounded-xl border border-gray-200">
             <Select
               label="Project Category *"
               options={categoryOptions}
@@ -258,7 +259,7 @@ const NewProject = () => {
           </div>
 
           {/* Skills */}
-          <div className="bg-gray-50 p-5 rounded-xl border border-gray-200">
+          <div className="bg-gray-50 p-2 md:p-5 rounded-xl border border-gray-200">
             <label className="text-sm font-medium text-gray-700 mb-3 flex items-center gap-2">
               <Tag size={18} className="text-indigo-600" />
               Required Skills *
@@ -276,7 +277,7 @@ const NewProject = () => {
                 type="button"
                 onClick={handleAddSkill}
                 variant="secondary"
-                className="whitespace-nowrap bg-indigo-200 hover:bg-indigo-300 text-zinc-800 px-3"
+                className="whitespace-nowrap bg-indigo-100 hover:bg-indigo-300 text-primary px-3"
               >
                 Add Skill
               </Button>
@@ -317,16 +318,16 @@ const NewProject = () => {
             type="button"
             variant="outline"
             onClick={() => reset()}
-            className="px-6 py-3 bg-red-400 hover:bg-red-500 text-white"
+            className="px-6 py-2 bg-red-500 hover:bg-red-500 text-white"
           >
             Cancel
           </Button>
           <Button
             type="submit"
             variant="primary"
-            className="px-6 py-3 shadow-lg shadow-indigo-100 hover:shadow-indigo-200 bg-primary hover:bg-primary-hover text-primary-text"
+            className="px-6 py-2 shadow-lg shadow-indigo-100 hover:shadow-indigo-200 bg-primary hover:bg-primary-hover text-primary-text"
           >
-            <Check size={18} className="mr-2" />
+            <Send size={18}  />
             Post Project
           </Button>
         </div>

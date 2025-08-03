@@ -40,13 +40,13 @@ const ClientProjectCard = ({ project }) => {
   const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
   return (
-    <div className="border border-gray-200 rounded-lg p-4   shadow-sm hover:shadow-md transition-shadow duration-300 select-none max-w-md w-full ">
-      <div className="flex gap-3 h-full ">
-        <div className="flex-1">
+    <div className="border border-gray-200 rounded-lg p-2 sm:p-4   shadow-sm hover:shadow-md transition-shadow duration-300 select-none max-w-md w-full ">
+      <div className="flex gap-3 flex-col  h-full ">
+        <div className="flex-1 flex flex-col justify-between">
           <div className="flex justify-between  items-start">
             <div className="flex gap-2">
               <div
-                className={`w-8 h-8 ${randomColor} mt-1 rounded-full flex items-center justify-center text-white text-lg font-semibold`}
+                className={`w-8 h-8 ${randomColor} mt-1 rounded-full flex items-center justify-center text-white text-lg font-semibold line-clamp-1 `}
               >
                 {project.title?.charAt(0) || "P"}
               </div>

@@ -109,7 +109,7 @@ const AppliedForm = () => {
                 <div className="flex-1">
                   <div className="flex flex-col items-start gap-1 md:pr-50">
                     {/* Project Title */}
-                    <h3 className="text-lg font-semibold text-gray-800 transition-colors">
+                    <h3 className="text-lg font-semibold text-gray-800 transition-colors line-clamp-1">
                       {project.title}
                     </h3>
 

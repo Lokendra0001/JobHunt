@@ -170,7 +170,7 @@ const Home = () => {
             </span>
             <span className="block opacity-0 animate-fadeIn animation-delay-1000">
               <span className="relative">
-                5000+ Jobs
+                5000+ Projects
                 <span className="absolute -right-8 -top-4">
                   <span className="relative flex h-6 w-6">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75"></span>
@@ -183,9 +183,9 @@ const Home = () => {
             </span>
           </h1>
 
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10 opacity-0 animate-fadeIn animation-delay-1500">
+          <p className="text-sm sm:text-xl text-gray-600 max-w-2xl mx-auto mb-10 opacity-0 animate-fadeIn animation-delay-1500">
             The{" "}
-            <span className="font-semibold text-indigo-600">
+            <span className="font-semibold text-indigo-600 ">
               greatest platform
             </span>{" "}
             for tech talents and innovative companies to connect and grow
@@ -195,38 +195,38 @@ const Home = () => {
 
         {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div className="bg-white p-2 sm:p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex items-center mb-4">
               <div className="p-3 rounded-full bg-indigo-100 mr-4">
                 <Rocket className="h-6 w-6 text-indigo-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-gray-900">1000+</p>
-                <p className="text-gray-500">Tech Jobs</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">1000+</p>
+                <p className="text-gray-500">Tech Projects</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div className="bg-white p-2 sm:p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex items-center mb-4">
               <div className="p-3 rounded-full bg-green-100 mr-4">
                 <Briefcase className="h-6 w-6 text-green-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-gray-900">500+</p>
-                <p className="text-gray-500">Remote Jobs</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">500+</p>
+                <p className="text-gray-500">Remote Projects</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div className="bg-white p-2 sm:p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex items-center mb-4">
               <div className="p-3 rounded-full bg-purple-100 mr-4">
                 <Star className="h-6 w-6 text-purple-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-gray-900">250+</p>
-                <p className="text-gray-500">Startup Jobs</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">250+</p>
+                <p className="text-gray-500">Startup Projects</p>
               </div>
             </div>
           </div>
@@ -240,7 +240,7 @@ const Home = () => {
           <h1 className="text-2xl sm:text-3xl font-bold  text-gray-900">
             Explore By <span className="text-primary">Category</span>
           </h1>
-          <NavLink className=" flex items-center sm:mt-7  gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+          <NavLink className=" flex items-center mb-3 md:mb-0 sm:mt-7  gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
             Show all Projects <MoveRight className="w-5 h-5" />
           </NavLink>
         </div>

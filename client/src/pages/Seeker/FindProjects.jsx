@@ -296,39 +296,37 @@ const FindProjects = () => {
     <div className="bg-gray-50 min-h-screen py-3 sm:py-8  ">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
+        <div className="sm:text-center mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2">
             Find Your Next Freelance Project
           </h1>
-          <p className="sm:text-lg text-gray-600 ">
+          <p className="text-sm sm:text-base text-gray-600 ">
             Browse remote freelance projects matching your skills
           </p>
         </div>
 
         {/* Search Bar */}
-        <div className="bg-white sm:p-4 rounded-lg shadow-sm mb-8">
-          <div className="flex  gap-2 sm:gap-4">
-            <div className="flex-grow">
-              <Input
-                type="text"
-                icon={FiSearch}
-                placeholder="Search projects (e.g. React, Design, Python)"
-                className="py-3"
-                value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                }}
-              />
-            </div>
-            <Button className="bg-primary hover:bg-primary-hover text-white px-3 rounded-md transition-colors flex items-center justify-center ">
-              <FiSearch size={20} />
-              <span className="hidden md:block">Find Projects</span>
-            </Button>
+        <div className=" flex justify-between gap-1 sm:gap-3 px-3 sm:p-4 rounded-lg  mb-8 w-full ">
+          <div className="flex-grow">
+            <Input
+              type="text"
+              icon={FiSearch}
+              placeholder="Search projects (e.g. React, Design, Python)"
+              className="py-3"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            />
           </div>
+          <Button className="bg-primary hover:bg-primary-hover text-white px-3 rounded-md transition-colors flex items-center justify-center ">
+            <FiSearch size={20} />
+            <span className="hidden md:block">Find Projects</span>
+          </Button>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap justify-center sm:justify-start gap-3 mb-8">
+        <div className="flex flex-wrap  gap-3 mb-8">
           {[
             "All",
             "Development",

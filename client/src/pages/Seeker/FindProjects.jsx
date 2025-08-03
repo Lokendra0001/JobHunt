@@ -296,7 +296,7 @@ const FindProjects = () => {
     <div className="bg-gray-50 min-h-screen py-3 sm:py-8  ">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="sm:text-center mb-8">
+        <div className="text-center mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2">
             Find Your Next Freelance Project
           </h1>
@@ -306,20 +306,18 @@ const FindProjects = () => {
         </div>
 
         {/* Search Bar */}
-        <div className=" flex justify-between gap-1 sm:gap-3 px-3 sm:p-4 rounded-lg  mb-8 w-full ">
-          <div className="flex-grow">
+        <div className="flex justify-between gap-1 sm:gap-3 sm:p-4 rounded-lg mb-8 w-full">
+          <div className="flex-grow min-w-0">
             <Input
               type="text"
               icon={FiSearch}
               placeholder="Search projects (e.g. React, Design, Python)"
-              className="py-3"
+              className="py-3 w-full"
               value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-              }}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <Button className="bg-primary hover:bg-primary-hover text-white px-3 rounded-md transition-colors flex items-center justify-center ">
+          <Button className="bg-primary hover:bg-primary-hover text-white px-3 rounded-md transition-colors flex items-center justify-center whitespace-nowrap">
             <FiSearch size={20} />
             <span className="hidden md:block">Find Projects</span>
           </Button>

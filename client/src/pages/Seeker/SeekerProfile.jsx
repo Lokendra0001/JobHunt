@@ -42,7 +42,7 @@ const SeekerProfile = () => {
             </div>
 
             <div className="ml-32">
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
                 {user.fullName}
               </h1>
               <p className="text-gray-600">{user.role}</p>

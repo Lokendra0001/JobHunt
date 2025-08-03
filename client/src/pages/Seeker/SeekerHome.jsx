@@ -195,37 +195,43 @@ const Home = () => {
 
         {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div className="bg-white p-2 sm:p-6 rounded-xl shadow-sm border border-gray-200">
+          <div className="bg-white p-2 sm:p-6 rounded-xl sm:shadow-sm border border-gray-200">
             <div className="flex items-center mb-4">
               <div className="p-3 rounded-full bg-indigo-100 mr-4">
                 <Rocket className="h-6 w-6 text-indigo-600" />
               </div>
               <div>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900">1000+</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">
+                  1000+
+                </p>
                 <p className="text-gray-500">Tech Projects</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-2 sm:p-6 rounded-xl shadow-sm border border-gray-200">
+          <div className="bg-white p-2 sm:p-6 rounded-xl sm:shadow-sm border border-gray-200">
             <div className="flex items-center mb-4">
               <div className="p-3 rounded-full bg-green-100 mr-4">
                 <Briefcase className="h-6 w-6 text-green-600" />
               </div>
               <div>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900">500+</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">
+                  500+
+                </p>
                 <p className="text-gray-500">Remote Projects</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-2 sm:p-6 rounded-xl shadow-sm border border-gray-200">
+          <div className="bg-white p-2 sm:p-6 rounded-xl sm:shadow-sm border border-gray-200">
             <div className="flex items-center mb-4">
               <div className="p-3 rounded-full bg-purple-100 mr-4">
                 <Star className="h-6 w-6 text-purple-600" />
               </div>
               <div>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900">250+</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">
+                  250+
+                </p>
                 <p className="text-gray-500">Startup Projects</p>
               </div>
             </div>
@@ -240,7 +246,10 @@ const Home = () => {
           <h1 className="text-2xl sm:text-3xl font-bold  text-gray-900">
             Explore By <span className="text-primary">Category</span>
           </h1>
-          <NavLink to={"/seeker/findProjects"} className="flex items-center mb-3 md:mb-0 sm:mt-7  gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+          <NavLink
+            to={"/seeker/findProjects"}
+            className="flex items-center mb-3 md:mb-0 sm:mt-7  gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
+          >
             Show all Projects <MoveRight className="w-5 h-5" />
           </NavLink>
         </div>
@@ -251,7 +260,7 @@ const Home = () => {
             <NavLink
               to={`/seeker/findProjects?category=${category.name}`}
               key={i}
-              className="bg-white hover:bg-primary hover:text-primary-text p-6 rounded-xl  border border-primary-border transition-all  hover:-translate-y-1 group cursor-default"
+              className="bg-white hover:bg-primary hover:text-primary-text p-2 sm:p-6 rounded-xl  border border-primary-border transition-all  hover:-translate-y-1 group cursor-default"
             >
               <div className="flex flex-col gap-4">
                 <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-indigo-50  text-indigo-600">

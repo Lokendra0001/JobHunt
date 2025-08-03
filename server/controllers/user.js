@@ -47,10 +47,10 @@ const handleGetCurrentUser = async (req, res) => {
 const handleLogoutUser = async (req, res) => {
     try {
         res.clearCookie('plrC__r92qv98', {
-            httpOnly: true,
-            secure: true,
-            sameSite: "lax",
-            maxAge: 7 * 24 * 60 * 60 * 1000
+            httpOnly: true,      // 🔹 Prevents JS access (protects against XSS)
+            secure: true,        // 🔹 Required for HTTPS in production
+            sameSite: "None",    // 🔹 Required for cross-site cookies
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         })
         res.status(200).json({ message: "Logout Successfully!" });
     } catch (err) {

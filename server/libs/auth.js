@@ -12,10 +12,10 @@ const generateTokenAndSendCookie = (user, res) => {
 
     const token = jwt.sign(payload, secret);
     res.cookie('plrC__r92qv98', token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-        maxAge: 7 * 24 * 60 * 60 * 1000
+        httpOnly: true,      // 🔹 Prevents JS access (protects against XSS)
+        secure: true,        // 🔹 Required for HTTPS in production
+        sameSite: "None",    // 🔹 Required for cross-site cookies
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
 }
 

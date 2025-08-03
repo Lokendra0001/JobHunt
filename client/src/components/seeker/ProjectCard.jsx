@@ -49,8 +49,8 @@ const ProjectCard = ({ project }) => {
 
           {/* Job Title */}
           <div className="mb-3">
-            <h2 className="text-lg font-bold text-gray-800 leading-tight">
-              {category}
+            <h2 className="text-lg font-bold text-gray-800 leading-tight line-clamp-1">
+              {title}
             </h2>
             <p className="text-indigo-600 text-sm font-medium mt-1">
               {client_id?.fullName || "Rakesh Rajpurohit"} • Remote

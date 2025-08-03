@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { serverObj } from "../../config/serverConfig";
 import ClientProjectCard from "../../components/clieent/ClientProjectCard";
-import Button from "../../components/common/Button";
 import { NavLink } from "react-router-dom";
 import { Frown } from "lucide-react";
 
@@ -20,6 +19,10 @@ const ClientHome = () => {
         {
           withCredentials: true,
         }
+      );
+      res.data.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
       setProjects(res.data);
     } catch (err) {
@@ -83,9 +86,9 @@ const ClientHome = () => {
   }
 
   return (
-    <div className="py-8 min-h-[90dvh]">
+    <div className="py-8 min-h-[90dvh] ">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Your Projects</h1>
+        <h1 className="text-3xl font-bold text-primary">Your Projects</h1>
         <p className="text-gray-600 mt-2">
           View and manage your freelance projects in one place
         </p>

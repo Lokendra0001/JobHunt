@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Mail, User2Icon, LockKeyhole, LogIn, AtSignIcon } from "lucide-react";
+import {
+  Mail,
+  User2Icon,
+  LockKeyhole,
+  LogIn,
+  AtSignIcon,
+  LogInIcon,
+  Loader2,
+} from "lucide-react";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
@@ -141,8 +149,6 @@ const Login = () => {
 
               <Button
                 type="submit"
-                btnName="SignIn"
-                icon={LogIn}
                 className={`w-full mt-10 text-white px-4 py-2 ${
                   loading
                     ? "bg-indigo-500 cursor-not-allowed"
@@ -150,7 +156,17 @@ const Login = () => {
                 }  `}
                 loading={loading}
                 disabled={loading}
-              />
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="animate-spin" /> SignIn...
+                  </>
+                ) : (
+                  <>
+                    <LogInIcon /> SignIn
+                  </>
+                )}
+              </Button>
             </form>
 
             <p className="w-full text-start leading-0">

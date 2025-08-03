@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { serverObj } from "../../config/serverConfig";
 import {
   Briefcase,
   Bell,
@@ -7,160 +9,186 @@ import {
   DollarSign,
   User,
   XCircle,
+  LogOut,
+  User2,
+  ChevronRight,
+  ArrowRightIcon,
 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { handleErrorMsg, handleSuccessMsg } from "../../config/toast";
 
 const ClientDashboard = () => {
-  // Mock data
-  const stats = {
-    projects: 5,
-    active: 2,
-    proposals: 8,
-    completed: 3,
+  const serverAPI = serverObj.serverAPI;
+  const [projects, setProjects] = useState([]);
+  const navigate = useNavigate();
+  const [stats, setStats] = useState({
+    totalOpenProject: 0,
+    totalAssignedProject: 0,
+    totalProposals: 0,
+  });
+
+  const fetchAllProjects = async () => {
+    try {
+      const res = await axios.get(
+        `${serverAPI}/freelancerProject/get-projects`,
+        {
+          withCredentials: true,
+        }
+      );
+      res.data.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+      console.log(res.data);
+      setProjects(res.data);
+    } catch (err) {
+      handleErrorMsg("Failed to load projects. Please try again later.");
+    }
   };
 
-  const recentProjects = [
+  useEffect(() => {
+    fetchAllProjects();
+  }, []);
+
+  //Functino use to set the stats of the project
+  useEffect(() => {
+    const calculateStats = () => {
+      const stats = {
+        totalOpenProject: 0,
+        totalAssignedProject: 0,
+        totalProposals: 0,
+      };
+
+      projects.forEach((e) => {
+        if (e.status === "Open") stats.totalOpenProject++;
+        if (e.status === "Assigned") stats.totalAssignedProject++;
+        if (e.proposals.length > 0) stats.totalProposals += e.proposals.length;
+      });
+
+      setStats(stats);
+    };
+
+    calculateStats();
+  }, [projects]);
+
+  // Handle Logout function
+  const handleLogout = async () => {
+    try {
+      const res = await axios.get(`${serverObj.serverAPI}/user/logoutUser`, {
+        withCredentials: true,
+      });
+      handleSuccessMsg(res.data.message);
+      navigate("/login");
+    } catch (err) {
+      handleErrorMsg(err.message);
+    }
+  };
+
+  const statusCard = [
     {
-      id: 1,
-      title: "Build a Portfolio Website",
-      status: "Open",
-      proposals: 3,
-      budget: "$300",
-      type: "Fixed",
+      name: "Total Project",
+      icon: <Briefcase className="text-purple-600" size={20} />,
+      value: projects.length,
     },
     {
-      id: 2,
-      title: "Logo Design",
-      status: "Open",
-      proposals: 2,
-      budget: "$150",
-      type: "Fixed",
+      name: "Open",
+      icon: <Clock className="text-blue-600" size={20} />,
+      value: stats.totalOpenProject,
+    },
+    {
+      name: "Proposals",
+      icon: <User2 className="text-green-600" size={20} />,
+      value: stats.totalProposals,
+    },
+    {
+      name: "Assigned",
+      icon: <CheckCircle className="text-primary" size={20} />,
+      value: stats.totalAssignedProject,
     },
   ];
 
-  const recentProposals = [
-    {
-      id: 1,
-      freelancer: "Riya",
-      bid: "$280",
-      days: 5,
-      project: "Portfolio Website",
-    },
-    {
-      id: 2,
-      freelancer: "John",
-      bid: "$300",
-      days: 7,
-      project: "Portfolio Website",
-    },
-  ];
-
-  const notifications = [
-    {
-      id: 1,
-      message: 'John applied to "Portfolio Website"',
-      time: "2 hours ago",
-    },
-    {
-      id: 2,
-      message: 'Your project "Logo Design" got 2 new proposals',
-      time: "1 day ago",
-    },
-  ];
+  const handleCloseProject = async (projectId) => {
+    try {
+      const res = await axios.delete(
+        `${serverObj.serverAPI}/freelancerProject/close-project`,
+        {
+          withCredentials: true,
+          headers: { projectId },
+        }
+      );
+      handleSuccessMsg(res.data.message);
+      setProjects((prev) => prev.filter((e) => e._id !== projectId));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto select-none py-8">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold text-gray-800">Welcome, Rakesh!</h1>
-        <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+        <Link
+          to={"/client/create-newProject"}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+        >
           <Briefcase size={18} />
           Post a New Project
-        </button>
+        </Link>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3">
-            <div className="bg-indigo-50 p-2 rounded-full">
-              <Briefcase className="text-indigo-600" size={20} />
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Total Projects</p>
-              <p className="text-xl font-semibold">{stats.projects}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3">
-            <div className="bg-blue-50 p-2 rounded-full">
-              <Clock className="text-blue-600" size={20} />
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Active</p>
-              <p className="text-xl font-semibold">{stats.active}</p>
+        {statusCard.map((status, i) => (
+          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+            <div className="flex items-center gap-3">
+              <div className="bg-indigo-50 p-2 rounded-full">{status.icon}</div>
+              <div>
+                <p className="text-gray-500 text-sm">{status.name}</p>
+                <p className="text-xl font-semibold">{status.value}</p>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3">
-            <div className="bg-green-50 p-2 rounded-full">
-              <User className="text-green-600" size={20} />
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Proposals</p>
-              <p className="text-xl font-semibold">{stats.proposals}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3">
-            <div className="bg-purple-50 p-2 rounded-full">
-              <CheckCircle className="text-purple-600" size={20} />
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Completed</p>
-              <p className="text-xl font-semibold">{stats.completed}</p>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Recent Projects */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-8">
+      <div className="bg-white rounded-lg shadow-sm sm:border sm:border-gray-200  sm:p-6 mb-8">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
             <Briefcase className="text-indigo-600" size={20} />
             Recent Projects
           </h2>
-          <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
-            View All
-          </button>
+          <Link
+            to={"/client"}
+            className="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex gap-1 items-center"
+          >
+            View All <ArrowRightIcon size={18} />
+          </Link>
         </div>
 
         <div className="space-y-4">
-          {recentProjects.map((project) => (
+          {projects.slice(0, 3).map((project) => (
             <div
-              key={project.id}
-              className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4 border-b border-gray-100 last:border-0"
+              key={project._id}
+              className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4 sm:p-4 border-b border-gray-200 last:border-0"
             >
               <div>
-                <h3 className="font-medium text-gray-800">{project.title}</h3>
+                <h3 className="font-medium text-gray-800 line-clamp-1">
+                  {project.title}
+                </h3>
                 <div className="flex items-center gap-4 mt-1">
                   <span
                     className={`text-xs px-2 py-1 rounded-full ${
                       project.status === "Open"
                         ? "bg-green-100 text-green-800"
-                        : "bg-gray-100 text-gray-800"
+                        : "bg-indigo-100 text-primary"
                     }`}
                   >
                     {project.status}
                   </span>
                   <span className="text-sm text-gray-500">
-                    {project.proposals} Proposals
+                    {project.proposals.length} Proposals
                   </span>
                   <span className="text-sm font-medium">
                     {project.budget} {project.type}
@@ -168,10 +196,16 @@ const ClientDashboard = () => {
                 </div>
               </div>
               <div className="flex gap-2">
-                <button className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
+                <Link
+                  to={`/client/allProposals/${project._id}`}
+                  className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50"
+                >
                   View
-                </button>
-                <button className="px-3 py-1 bg-gray-100 text-gray-800 rounded-md text-sm hover:bg-gray-200">
+                </Link>
+                <button
+                  className="px-3 py-1 bg-gray-100 text-gray-800 rounded-md text-sm hover:bg-gray-200"
+                  onClick={() => handleCloseProject(project._id)}
+                >
                   Close
                 </button>
               </div>
@@ -180,79 +214,14 @@ const ClientDashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Recent Proposals */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
-          <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2 mb-4">
-            <User className="text-indigo-600" size={20} />
-            Recent Proposals
-          </h2>
-
-          <div className="space-y-4">
-            {recentProposals.map((proposal) => (
-              <div
-                key={proposal.id}
-                className="p-4 border border-gray-100 rounded-lg"
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-medium text-gray-800">
-                      {proposal.freelancer}
-                    </h3>
-                    <p className="text-sm text-gray-500">{proposal.project}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-medium flex items-center justify-end gap-1">
-                      <DollarSign size={16} />
-                      {proposal.bid}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      {proposal.days} days
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-2 mt-4">
-                  <button className="flex-1 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md flex items-center justify-center gap-1">
-                    <CheckCircle size={16} />
-                    Accept
-                  </button>
-                  <button className="flex-1 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md flex items-center justify-center gap-1">
-                    <XCircle size={16} />
-                    Reject
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Notifications */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-              <Bell className="text-indigo-600" size={20} />
-              Notifications
-            </h2>
-            <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
-              Mark All as Read
-            </button>
-          </div>
-
-          <div className="space-y-3">
-            {notifications.map((notification) => (
-              <div
-                key={notification.id}
-                className="p-3 hover:bg-gray-50 rounded-lg cursor-pointer"
-              >
-                <p className="text-gray-800">{notification.message}</p>
-                <p className="text-xs text-gray-500 mt-1">
-                  {notification.time}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* Logout Button */}
+      <button
+        onClick={handleLogout}
+        className="flex  items-center justify-center w-full sm:w-auto px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+      >
+        <LogOut className="h-4 w-4 mr-2" />
+        Logout
+      </button>
     </div>
   );
 };

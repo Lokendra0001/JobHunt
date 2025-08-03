@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Mail, User2Icon, LockKeyhole, LogIn, AtSignIcon } from "lucide-react";
+import {
+  Mail,
+  User2Icon,
+  LockKeyhole,
+  LogIn,
+  AtSignIcon,
+  Loader2,
+} from "lucide-react";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
@@ -145,16 +152,23 @@ const Signup = () => {
 
               <Button
                 type="submit"
-                btnName="Signup"
-                icon={LogIn}
                 className={`text-white w-full   px-4 py-2  ${
                   loading
                     ? "bg-indigo-500 cursor-not-allowed"
                     : "bg-primary hover:bg-primary-hover cursor-pointer"
                 }  `}
-                loading={loading}
                 disabled={loading}
-              />
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="animate-spin" /> Creating Account...
+                  </>
+                ) : (
+                  <>
+                    <LogIn /> Create Account
+                  </>
+                )}
+              </Button>
             </form>
 
             <p className="w-full text-start leading-0">

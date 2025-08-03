@@ -23,6 +23,8 @@ import {
 import { Input, Select, Button } from "../../components/common/Index";
 import axios from "axios";
 import { serverObj } from "../../config/serverConfig";
+import { handleErrorMsg, handleSuccessMsg } from "../../config/toast";
+import { useNavigate } from "react-router-dom";
 
 const NewProject = () => {
   const {
@@ -38,6 +40,7 @@ const NewProject = () => {
   const budgetType = watch("budgetType");
   const skills = watch("skills");
   const category = watch("category");
+  const navigate = useNavigate();
 
   const budgetTypeOptions = ["Fixed", "Hourly"];
 
@@ -75,8 +78,11 @@ const NewProject = () => {
       .post(`${serverAPI}/freelancerProject/create-project`, data, {
         withCredentials: true,
       })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        handleSuccessMsg(res.data.message);
+        navigate(`/client/project/${res.data.project._id}`);
+      })
+      .catch((err) => handleErrorMsg(err.message));
   };
 
   return (

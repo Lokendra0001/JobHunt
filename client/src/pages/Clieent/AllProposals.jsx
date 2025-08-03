@@ -36,6 +36,10 @@ const AppliedForm = () => {
           }
         );
         if (res.data && res.data) {
+          res.data.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
           setProjects(res.data);
         }
       } catch (error) {

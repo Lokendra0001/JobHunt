@@ -31,6 +31,10 @@ const AppliedForm = () => {
           withCredentials: true,
         });
         if (res.data && res.data.appliedForm) {
+          res.data.appliedForm.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
           setAppliedJobs(res.data.appliedForm);
         }
       } catch (error) {

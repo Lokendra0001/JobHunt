@@ -18,7 +18,7 @@ const Button = ({
     >
       <span className="flex gap-1.5 items-center">
         {Icon && <Icon size={20} />}
-        {loading ? (btnName || children) + "..." : btnName || children}
+        {btnName || children}
       </span>
     </button>
   );

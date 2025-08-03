@@ -43,7 +43,7 @@ const ClientProjectCard = ({ project }) => {
     <div className="border border-gray-200 rounded-lg p-4   shadow-sm hover:shadow-md transition-shadow duration-300 select-none max-w-md w-full ">
       <div className="flex gap-3 h-full ">
         <div className="flex-1">
-          <div className="flex justify-between items-start">
+          <div className="flex justify-between  items-start">
             <div className="flex gap-2">
               <div
                 className={`w-8 h-8 ${randomColor} mt-1 rounded-full flex items-center justify-center text-white text-lg font-semibold`}
@@ -51,10 +51,10 @@ const ClientProjectCard = ({ project }) => {
                 {project.title?.charAt(0) || "P"}
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-gray-800 line-clamp-1">
+                <h3 className="text-lg font-semibold text-gray-800 line-clamp-1 pr-4">
                   {title}
                 </h3>
-                <span className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full mt-1">
+                <span className="inline-block  px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full mt-1">
                   {category}
                 </span>
               </div>
@@ -64,6 +64,8 @@ const ClientProjectCard = ({ project }) => {
               ${
                 status === "Open"
                   ? "bg-green-100 text-green-800"
+                  : status === "Assigned"
+                  ? "bg-indigo-100 text-indigo-800"
                   : status === "In Progress"
                   ? "bg-yellow-100 text-yellow-800"
                   : status === "Completed"
@@ -93,22 +95,6 @@ const ClientProjectCard = ({ project }) => {
                       "en-IN"
                     )} - ₹${maxBudget.toLocaleString("en-IN")}/hr`}
               </div>
-
-              {/* <div className="flex flex-wrap gap-1 max-w-[200px] justify-end">
-                {skills.slice(0, 2).map((skill, index) => (
-                  <span
-                    key={index}
-                    className="px-2 py-0.5 text-xs font-medium bg-indigo-100 text-indigo-600 rounded"
-                  >
-                    {skill}
-                  </span>
-                ))}
-                {skills.length > 2 && (
-                  <span className="px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded">
-                    +{skills.length - 2}
-                  </span>
-                )}
-              </div> */}
             </div>
           </div>
 
@@ -120,8 +106,8 @@ const ClientProjectCard = ({ project }) => {
             )}
 
             <NavLink to={`/client/project/${project._id}`}>
-              <Button className="bg-primary/95 hover:bg-primary-hover px-3 py-1 text-sm text-primary-text rounded">
-                View
+              <Button className="bg-primary/85 hover:bg-primary px-3 py-1 text-sm text-primary-text rounded">
+                View Detail
               </Button>
             </NavLink>
           </div>

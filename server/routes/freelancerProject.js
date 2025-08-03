@@ -78,7 +78,11 @@ router.patch('/accept-proposal', async (req, res) => {
         seeker.status = "Accepted";
         project.status = "Assigned";
         project.assignedFreelancerId = seeker.seeker_id;
-        console.log(project)
+        project.proposals.forEach((proposal) => {
+            if (proposal._id.toString() !== proposalId) {
+                proposal.status = "Rejected";
+            }
+        });
         await project.save();
         res.status(200).json(project)
     } catch (err) {
@@ -95,6 +99,18 @@ router.patch('/reject-proposal', async (req, res) => {
         seeker.status = "Rejected";
         await project.save();
         res.status(200).json(project)
+    } catch (err) {
+        console.log(err.message)
+        res.status(500).json({ message: err })
+    }
+})
+
+router.delete('/close-project', async (req, res) => {
+    try {
+
+        const { projectid } = req.headers;
+        await Freelancer.findByIdAndDelete(projectid);
+        res.status(200).json({ message: "Project Successfully Closed!" })
     } catch (err) {
         console.log(err.message)
         res.status(500).json({ message: err })

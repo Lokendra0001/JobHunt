@@ -41,12 +41,12 @@ const ApplyForm = () => {
       if (res.data.message) {
         handleSuccessMsg(res.data.message);
         const projectId = res.data.projectId;
-        const added = await axios.patch(
+        await axios.patch(
           `${serverObj.serverAPI}/user/add-projectId`,
           { projectId },
           { withCredentials: true }
         );
-        console.log(added);
+        navigate("/seeker/applied-projects");
         reset();
       } else {
         handleErrorMsg(res.data.error);

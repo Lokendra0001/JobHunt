@@ -28,7 +28,7 @@ const freelanceProjectSchema = new Schema({
         required: true
     },
     skills: [
-        { type: String, required: true }
+        { type: String, default: null }
     ],
     category: {
         type: String,

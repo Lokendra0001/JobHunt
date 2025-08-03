@@ -240,7 +240,7 @@ const Home = () => {
           <h1 className="text-2xl sm:text-3xl font-bold  text-gray-900">
             Explore By <span className="text-primary">Category</span>
           </h1>
-          <NavLink className=" flex items-center mb-3 md:mb-0 sm:mt-7  gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+          <NavLink to={"/seeker/findProjects"} className="flex items-center mb-3 md:mb-0 sm:mt-7  gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
             Show all Projects <MoveRight className="w-5 h-5" />
           </NavLink>
         </div>
